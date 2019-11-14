@@ -4,6 +4,7 @@ import Item from './Item';
 import * as vanilla from './vanilla';
 import * as worker from './worker';
 import * as wasm from './wasm';
+import * as generator from './generator';
 
 const Items = ({ items }) => 
 	items.map((item, index) => {
@@ -14,6 +15,10 @@ const items = [
 	{
 		title: 'Vanilla Js',
 		module: vanilla,
+	},
+	{
+		title: 'Generators',
+		module: generator,
 	},
 	{
 		title: 'Worker',
@@ -39,6 +44,7 @@ export default class App extends React.Component {
 			</div>
 			</section>
 			<section className="section">
+				<input type="range" />
 				<Items items={items} />
 			</section>
 

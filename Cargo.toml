@@ -5,3 +5,12 @@ authors = ["Paul Wilson <paul.wilson@ktech.com>"]
 edition = "2018"
 
 [dependencies]
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+	"console"
+]
+
+[lib]
+crate-type = ["cdylib"]
