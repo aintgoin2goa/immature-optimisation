@@ -1,8 +1,8 @@
 import {BASE} from '../config';
-import { run } from './src/run.rs';
+import module from './crate/Cargo.toml';
 
 export const start = (onprogress, end) => {
-	const result = run(BASE);
+	const result = module.run(BASE, onprogress);
 	onprogress(result);
 	end();
 }
