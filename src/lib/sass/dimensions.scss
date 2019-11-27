@@ -1,0 +1,5 @@
+$padding-unit: 20px;
+
+@function padding($multiplier) {
+    @return $padding-unit * $multiplier;
+}
