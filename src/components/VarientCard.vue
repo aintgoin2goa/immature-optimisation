@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:class="className">
+    <div v-bind:class="className" v-on:click="onStart">
         <h4 class="card__title">{{ name }}</h4>
         <div class="card__icon" v-show="state === states.READY">
             <svg
@@ -15,26 +15,11 @@
             </svg>
         </div>
         <div class="card__icon" v-show="state === states.WORKING">
-            <svg
-                width="100%"
-                height="100%"
-                viewBox="0 0 38 38"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="100%" height="100%" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                    <linearGradient
-                        x1="8.042%"
-                        y1="0%"
-                        x2="65.682%"
-                        y2="23.865%"
-                        id="a"
-                    >
+                    <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
                         <stop stop-color="#fff" stop-opacity="0" offset="0%" />
-                        <stop
-                            stop-color="#fff"
-                            stop-opacity=".631"
-                            offset="63.146%"
-                        />
+                        <stop stop-color="#fff" stop-opacity=".631" offset="63.146%" />
                         <stop stop-color="#fff" offset="100%" />
                     </linearGradient>
                 </defs>
@@ -64,7 +49,7 @@
                         cy="77"
                         r="72"
                         style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"
-                    ></circle>
+                    />
                     <circle
                         id="colored"
                         fill="#22AE73"
@@ -72,7 +57,7 @@
                         cy="77"
                         r="72"
                         style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"
-                    ></circle>
+                    />
                     <polyline
                         class="st0"
                         stroke="#fff"
@@ -87,8 +72,8 @@
 </template>
 
 <style lang="scss">
-@import '../lib/sass/mixins';
-@import '../lib/sass/colors';
+@import '../sass/mixins';
+@import '../sass/colors';
 
 @keyframes spin {
     from {
@@ -172,7 +157,8 @@
     grid-row: 1;
 }
 </style>
-<script>
+<script lang="ts">
+import { addResult, Result } from '../lib/store';
 const States = {
     READY: 'ready',
     WORKING: 'working',
@@ -181,15 +167,55 @@ const States = {
 export default {
     data: () => ({
         states: States,
-        state: States.COMPLETE,
+        state: States.READY,
+        result: 0,
+        time: 0,
     }),
     props: {
         name: String,
         id: String,
+        start: Function,
     },
     computed: {
-        className: function() {
+        className: function(): string {
             return `card card--${this.id} card--${this.state}`;
+        },
+    },
+    methods: {
+        onStart: function(e: Event) {
+            if (this.state !== States.READY) {
+                return;
+            }
+
+            this.state = States.WORKING;
+            this.result = 0;
+            this.time = 0;
+            performance.mark(`${this.id}.start`);
+            this.start(this.onEnd.bind(this), this.onProgress.bind(this));
+        },
+        onProgress: function(currentResult: number) {
+            this.result = currentResult;
+        },
+        onEnd: function(finalResult: number) {
+            performance.mark(`${this.id}.end`);
+            performance.measure(this.id, `${this.id}.start`, `${this.id}.end`);
+            const measurement = performance
+                .getEntriesByName(this.id)
+                .slice(-1)[0];
+            performance.clearMeasures();
+            this.result = finalResult;
+            this.time = Math.round(measurement.duration);
+            this.state = States.COMPLETE;
+            const result: Result = {
+                name: this.name,
+                time: this.time,
+                result: this.result,
+            };
+            addResult(result);
+            console.log(result);
+            setTimeout(() => {
+                this.state = States.READY;
+            }, 1000);
         },
     },
 };

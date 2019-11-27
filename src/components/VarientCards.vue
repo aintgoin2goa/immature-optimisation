@@ -1,13 +1,18 @@
 <template>
     <section class="varients">
-        <div v-for="varient of varients" v-bind:key="varient.id">
-            <Card v-bind:name="varient.name" v-bind:id="varient.id" />
-        </div>
+        <Card
+            v-for="varient of varients"
+            v-bind:key="varient.id"
+            v-bind:name="varient.name"
+            v-bind:id="varient.id"
+            v-bind:start="varient.start"
+        ></Card>
+        <Results />
     </section>
 </template>
 
 <style lang="scss">
-.varients > div {
+.varients {
     display: grid;
     grid-template-columns: 25vw 75vw;
     grid-template-rows: 25% 25% 25% 25%;
@@ -17,6 +22,7 @@
 
 <script>
 import Card from './VarientCard';
+import Results from './Results';
 import { vanilla } from '../varients/';
 export default {
     data: () => ({
@@ -30,6 +36,7 @@ export default {
     }),
     components: {
         Card,
+        Results,
     },
 };
 </script>

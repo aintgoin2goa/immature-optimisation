@@ -5,8 +5,8 @@
 </template>
 
 <style lang="scss">
-@import '../lib/sass/colors';
-@import '../lib/sass/dimensions';
+@import '../sass/colors';
+@import '../sass/dimensions';
 .header {
     width: 100%;
     padding: padding(1);
