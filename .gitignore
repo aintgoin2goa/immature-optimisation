@@ -62,5 +62,5 @@ typings/
 
 .cache
 dist
-src/wasm/crate/pkg
-src/wasm/crate/target
+pkg
+target

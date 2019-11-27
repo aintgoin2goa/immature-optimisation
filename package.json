@@ -1,23 +1,28 @@
 {
-  "name": "immature-optimisation",
-  "version": "1.0.0",
-  "repository": "git@github.com:aintgoin2goa/immature-optimisation.git",
-  "author": "Paul Wilson <paul.wilson@ktech.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^6.5.1",
-    "parcel-bundler": "^1.12.4",
-    "prettier": "^1.18.2"
-  },
-  "scripts": {
-    "start": "parcel index.html"
-  },
-  "dependencies": {
-    "bulma": "^0.8.0",
-    "ms": "^2.1.2",
-    "parcel-plugin-wasm.rs": "^1.2.15",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "regenerator-runtime": "^0.13.3"
-  }
+    "name": "immature-optimisation",
+    "version": "1.0.0",
+    "repository": "git@github.com:aintgoin2goa/immature-optimisation.git",
+    "author": "Paul Wilson <paul.wilson@ktech.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "@vue/devtools": "^5.3.2",
+        "parcel-bundler": "^1.12.4",
+        "prettier": "^1.18.2",
+        "sass": "^1.23.7",
+        "tslint": "^5.20.1",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "scripts": {
+        "start": "parcel src/index.html"
+    },
+    "dependencies": {
+        "@vue/component-compiler-utils": "^3.0.2",
+        "parcel-plugin-wasm.rs": "^1.2.15",
+        "typescript": "^3.7.2",
+        "vue": "^2.6.10",
+        "vue-hot-reload-api": "^2.3.4"
+    },
+    "alias": {
+        "vue": "./node_modules/vue/dist/vue.common.js"
+    }
 }
