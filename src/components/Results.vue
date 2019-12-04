@@ -5,19 +5,19 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Result</th>
-                    <th>Time</th>
-                    <th>Diff</th>
+                    <th>Runs</th>
+                    <th>Min</th>
+                    <th>Max</th>
                     <th>Average</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(result, index) in store.results" v-bind:key="index">
+                <tr v-for="result in results()" v-bind:key="result.name">
                     <td>{{result.name}}</td>
-                    <td>{{result.result}}</td>
-                    <td>{{result.time}}ms</td>
-                    <td>{{diff(result.time)}}ms</td>
-                    <td>{{average(result.name)}}ms</td>
+                    <td>{{result.runs}}</td>
+                    <td>{{result.min}}ms</td>
+                    <td>{{result.max}}ms</td>
+                    <td>{{result.average}}ms</td>
                 </tr>
             </tbody>
         </table>
@@ -58,13 +58,53 @@
 <script lang="ts">
 import Vue from 'vue';
 import store from '../lib/store';
+
+interface CombinedResult {
+    name: string;
+    runs: number;
+    min: number;
+    max: number;
+    average: number;
+}
+
+const getTimes = (name: string) =>
+    store.results.filter(r => r.name === name).map(r => r.time);
+
 export default Vue.extend({
     data: () => ({
         store,
     }),
     methods: {
-        diff: function(current: number): number {
-            return store.results[0].time - current;
+        results: function(): CombinedResult[] {
+            const resultNames = this.names();
+            const combinedResults = resultNames.map(name => {
+                return {
+                    name,
+                    min: this.min(name),
+                    max: this.max(name),
+                    runs: this.count(name),
+                    average: this.average(name),
+                };
+            });
+            return combinedResults.sort(function(
+                a: CombinedResult,
+                b: CombinedResult,
+            ): number {
+                return a.average - b.average;
+            });
+        },
+        names: function() {
+            const names = store.results.map(r => r.name);
+            return [...new Set(names)];
+        },
+        count: function(name: string): number {
+            return store.results.filter(r => r.name === name).length;
+        },
+        min: function(name: string): number {
+            return Math.min(...getTimes(name));
+        },
+        max: function(name: string): number {
+            return Math.max(...getTimes(name));
         },
         average: function(name: string): number {
             const times = store.results

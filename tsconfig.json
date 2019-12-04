@@ -1,11 +1,10 @@
 // tsconfig.json
 {
-  "compilerOptions": {
-    "target": "es2017",
-    "strict": true,
-    "experimentalDecorators": true
-    // "types": ["node", "mocha", "chai"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.vue"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "target": "es2017",
+        "strict": true,
+        "lib": ["webworker", "es6", "scripthost"]
+    },
+    "include": ["src/**/*.ts", "src/**/*.vue"],
+    "exclude": ["node_modules"]
 }

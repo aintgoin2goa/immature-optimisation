@@ -23,7 +23,7 @@
 <script>
 import Card from './VarientCard';
 import Results from './Results';
-import { vanilla } from '../varients/';
+import { vanilla, worker, wasm, gpu } from '../varients/';
 export default {
     data: () => ({
         varients: [
@@ -31,6 +31,21 @@ export default {
                 name: 'Vanilla',
                 start: vanilla,
                 id: 'vanilla',
+            },
+            {
+                name: 'Worker',
+                id: 'worker',
+                start: worker,
+            },
+            {
+                name: 'WASM',
+                id: 'wasm',
+                start: wasm,
+            },
+            {
+                name: 'GPU',
+                id: 'gpu',
+                start: gpu,
             },
         ],
     }),

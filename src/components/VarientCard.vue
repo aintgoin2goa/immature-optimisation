@@ -143,6 +143,31 @@
     }
 }
 
+.card--worker {
+    background-color: $worker;
+    color: white;
+
+    &.card--ready:hover {
+        background-color: $worker-light;
+    }
+}
+
+.card--wasm {
+    background-color: $wasm;
+
+    &.card--ready:hover {
+        background-color: $wasm-light;
+    }
+}
+
+.card--gpu {
+    background-color: $gpu;
+
+    &.card--ready:hover {
+        background-color: $gpu-light;
+    }
+}
+
 .card--working {
     background-color: $light-2;
     animation: pulse 0.5s linear infinite alternate;
@@ -197,6 +222,7 @@ export default {
             this.result = currentResult;
         },
         onEnd: function(finalResult: number) {
+            console.log(`${this.name} Result`, finalResult);
             performance.mark(`${this.id}.end`);
             performance.measure(this.id, `${this.id}.start`, `${this.id}.end`);
             const measurement = performance
@@ -212,7 +238,6 @@ export default {
                 result: this.result,
             };
             addResult(result);
-            console.log(result);
             setTimeout(() => {
                 this.state = States.READY;
             }, 1000);

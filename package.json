@@ -18,6 +18,7 @@
     "dependencies": {
         "@vue/component-compiler-utils": "^3.0.2",
         "parcel-plugin-wasm.rs": "^1.2.15",
+        "turbojs": "^1.0.2",
         "typescript": "^3.7.2",
         "vue": "^2.6.10",
         "vue-hot-reload-api": "^2.3.4"
