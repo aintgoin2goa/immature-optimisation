@@ -1,3 +1,4 @@
+import { BASE } from '../../lib/config';
 type Callback = (val: number) => void;
 
 export const start = (end: Callback) => {
@@ -8,4 +9,5 @@ export const start = (end: Callback) => {
             end(data);
         }
     };
+    worker.postMessage(['start', BASE]);
 };

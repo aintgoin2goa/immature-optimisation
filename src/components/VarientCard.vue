@@ -15,11 +15,26 @@
             </svg>
         </div>
         <div class="card__icon" v-show="state === states.WORKING">
-            <svg width="100%" height="100%" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+            <svg
+                width="100%"
+                height="100%"
+                viewBox="0 0 38 38"
+                xmlns="http://www.w3.org/2000/svg"
+            >
                 <defs>
-                    <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+                    <linearGradient
+                        x1="8.042%"
+                        y1="0%"
+                        x2="65.682%"
+                        y2="23.865%"
+                        id="a"
+                    >
                         <stop stop-color="#fff" stop-opacity="0" offset="0%" />
-                        <stop stop-color="#fff" stop-opacity=".631" offset="63.146%" />
+                        <stop
+                            stop-color="#fff"
+                            stop-opacity=".631"
+                            offset="63.146%"
+                        />
                         <stop stop-color="#fff" offset="100%" />
                     </linearGradient>
                 </defs>
@@ -230,7 +245,7 @@ export default {
                 .slice(-1)[0];
             performance.clearMeasures();
             this.result = finalResult;
-            this.time = Math.round(measurement.duration);
+            this.time = measurement.duration;
             this.state = States.COMPLETE;
             const result: Result = {
                 name: this.name,

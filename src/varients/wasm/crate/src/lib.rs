@@ -6,45 +6,24 @@ extern crate web_sys;
 use wasm_bindgen::prelude::*;
 
 cfg_if! {
-    // When the `console_error_panic_hook` feature is enabled, we can call the
-    // `set_panic_hook` function to get better error messages if we ever panic.
-    if #[cfg(feature = "console_error_panic_hook")] {
-        extern crate console_error_panic_hook;
-        use console_error_panic_hook::set_once as set_panic_hook;
-    } else {
-        #[inline]
-        fn set_panic_hook() {}
-    }
+	// When the `console_error_panic_hook` feature is enabled, we can call the
+	// `set_panic_hook` function to get better error messages if we ever panic.
+	if #[cfg(feature = "console_error_panic_hook")] {
+		extern crate console_error_panic_hook;
+		use console_error_panic_hook::set_once as set_panic_hook;
+	} else {
+		#[inline]
+		fn set_panic_hook() {}
+	}
 }
-
-cfg_if! {
-    // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-    // allocator.
-    if #[cfg(feature = "wee_alloc")] {
-        extern crate wee_alloc;
-        #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-    }
-}
-
-
 
 #[wasm_bindgen]
-pub fn run(base:f64, onProgress: &js_sys::Function) -> f64 {
-	set_panic_hook();
-	use web_sys::console;
-	console::log_1(&"HERE".into());
-	let total: f64 = base.powf(7.0) as f64;
-	let mut count: f64 = 0.0;
+pub fn run(base: i32) -> f64 {
+	let total: i32 = base.pow(7) as i32;
 	let mut result: f64 = 0.0;
-	loop {
-		if count == total {
-			break;
-		}
-		result += count.tan() * count.atan();
-		let jsResult: JsValue = result.into();
-		onProgress.call1(&JsValue::NULL, &jsResult);
-		count += 1.0;
+	for i in 0..total {
+		let x = i as f64;
+		result += x.atan() * x.tan();
 	}
 	return result;
 }

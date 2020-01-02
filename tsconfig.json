@@ -5,6 +5,6 @@
         "strict": true,
         "lib": ["webworker", "es6", "scripthost"]
     },
-    "include": ["src/**/*.ts", "src/**/*.vue"],
+    "include": ["src/**/*.ts", "src/**/*.vue", "src/varients/worker/worker.ts"],
     "exclude": ["node_modules"]
 }

@@ -5,6 +5,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Last result</th>
                     <th>Runs</th>
                     <th>Min</th>
                     <th>Max</th>
@@ -13,11 +14,12 @@
             </thead>
             <tbody>
                 <tr v-for="result in results()" v-bind:key="result.name">
-                    <td>{{result.name}}</td>
-                    <td>{{result.runs}}</td>
-                    <td>{{result.min}}ms</td>
-                    <td>{{result.max}}ms</td>
-                    <td>{{result.average}}ms</td>
+                    <td>{{ result.name }}</td>
+                    <td>{{ result.lastResult }}</td>
+                    <td>{{ result.runs }}</td>
+                    <td>{{ result.min }}ms</td>
+                    <td>{{ result.max }}ms</td>
+                    <td>{{ result.average }}ms</td>
                 </tr>
             </tbody>
         </table>
@@ -80,6 +82,7 @@ export default Vue.extend({
             const combinedResults = resultNames.map(name => {
                 return {
                     name,
+                    lastResult: this.lastResult(name),
                     min: this.min(name),
                     max: this.max(name),
                     runs: this.count(name),
@@ -97,6 +100,10 @@ export default Vue.extend({
             const names = store.results.map(r => r.name);
             return [...new Set(names)];
         },
+        lastResult: function(name: string) {
+            return store.results.filter(r => r.name === name).slice(-1)[0]
+                .result;
+        },
         count: function(name: string): number {
             return store.results.filter(r => r.name === name).length;
         },
@@ -111,7 +118,7 @@ export default Vue.extend({
                 .filter(r => r.name === name)
                 .map(r => r.time);
             const total = times.reduce((p, c) => p + c, 0);
-            return Math.round(total / times.length);
+            return total / times.length;
         },
     },
 });
